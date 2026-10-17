@@ -215,6 +215,7 @@ async function main() {
     const { status, html } = await get(path);
     check(`404 for ${path}`, status === 404, `got ${status}`);
     check(`404 page for ${path} is branded and titled`, html.includes("<title>Page not found | AniVibe</title>"));
+    check(`404 page for ${path} keeps the sample-data disclosure`, html.includes("Nothing can be ordered yet"));
   }
 
   console.log(`\n${passed} passed, ${failures.length} failed (against ${BASE_URL})`);

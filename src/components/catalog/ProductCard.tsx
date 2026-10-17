@@ -34,7 +34,9 @@ export function ProductCard({ product }: { product: Product }) {
             {product.name}
           </Link>
         </h3>
-        <div className="mt-auto flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1 pt-2">
+        {/* Phones: price above stock on every card, so prices align across a row even when a
+            longer "Low stock: N left" label would otherwise wrap on one card but not its neighbour. */}
+        <div className="mt-auto flex flex-col items-start gap-y-1 pt-2 sm:flex-row sm:flex-wrap sm:items-baseline sm:justify-between sm:gap-x-3">
           <PriceTag pricePaise={product.pricePaise} />
           <StockBadge quantity={product.stockQuantity} />
         </div>

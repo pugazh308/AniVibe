@@ -53,13 +53,17 @@ export function SiteHeader() {
             </button>
           </form>
 
-          <Link
+          {/* A plain link on purpose: a native fragment navigation (or full load) lets the
+              catalogue move focus into its search field (see CatalogFocus). next/link would
+              navigate client-side without a hashchange when already on /products. */}
+          {/* eslint-disable-next-line @next/next/no-html-link-for-pages -- intentional, see above */}
+          <a
             href="/products#search"
             className="inline-flex size-11 items-center justify-center hover:text-wine md:hidden"
           >
             <SearchIcon />
             <span className="sr-only">Search products</span>
-          </Link>
+          </a>
         </nav>
       </Container>
     </header>

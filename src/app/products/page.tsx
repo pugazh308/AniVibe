@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { CATALOG_ANCHOR, CATALOG_FORM_ID, CatalogFilters } from "@/components/catalog/CatalogFilters";
+import { CatalogFocus } from "@/components/catalog/CatalogFocus";
 import { CatalogFormRestore } from "@/components/catalog/CatalogFormRestore";
 import { CategoryTabs } from "@/components/catalog/CategoryTabs";
 import { EmptyState } from "@/components/catalog/EmptyState";
@@ -46,8 +47,10 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
   return (
     <Container className="pt-10 pb-24 sm:pt-14">
       <CatalogFormRestore formId={CATALOG_FORM_ID} />
-      {/* Search, sort and filter submissions land here (see CATALOG_ANCHOR). */}
-      <div id={CATALOG_ANCHOR} className="scroll-mt-4">
+      <CatalogFocus navKey={formKey} searchId="search" fallbackId={CATALOG_ANCHOR} />
+      {/* Search, sort and filter submissions land here (see CATALOG_ANCHOR); it also receives
+          focus when a client-side update would otherwise drop focus to the page body. */}
+      <div id={CATALOG_ANCHOR} tabIndex={-1} className="scroll-mt-4 outline-none focus-visible:outline-2">
         <p className="eyebrow">Shop</p>
         <h1 className="mt-3 font-serif text-5xl leading-none tracking-[-0.01em] text-balance sm:text-6xl">
           {headingFor(query)}
@@ -58,7 +61,7 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
         <CategoryTabs query={query} />
       </div>
 
-      <div className="mt-6 grid gap-x-14 gap-y-5 lg:mt-10 lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr]">
+      <div className="mt-6 grid grid-cols-[minmax(0,1fr)] gap-x-14 gap-y-5 lg:mt-10 lg:grid-cols-[13.5rem_minmax(0,1fr)] lg:grid-rows-[auto_1fr]">
         {/* Toolbar: search and sort join the catalogue form via the `form` attribute. */}
         <div
           key={`toolbar-${formKey}`}
@@ -111,7 +114,13 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
               </ul>
             </div>
           )}
-          <p className="mb-8 text-sm [overflow-wrap:anywhere] text-muted" data-testid="result-count">
+          {/* Polite live region: client-side changes (tabs, Clear filters) announce the new count. */}
+          <p
+            aria-live="polite"
+            aria-atomic="true"
+            className="mb-8 text-sm [overflow-wrap:anywhere] text-muted"
+            data-testid="result-count"
+          >
             {count} {count === 1 ? "product" : "products"}
             {query.q !== "" && <> matching “{query.q}”</>}
           </p>

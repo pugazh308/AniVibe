@@ -12,11 +12,14 @@ const BROKEN_LINK_HTML = `<!doctype html>
 <meta name="color-scheme" content="light">
 <title>Page not found | AniVibe</title>
 </head>
-<body style="margin:0;background:#f5f1e9;color:#171717;font-family:ui-sans-serif,system-ui,sans-serif;text-align:center;padding:6rem 1.25rem">
+<body style="margin:0;background:#f5f1e9;color:#171717;font-family:ui-sans-serif,system-ui,sans-serif;text-align:center">
+<div role="note" style="background:#171717;color:#f5f1e9;font-size:12px;line-height:1.6;padding:.625rem 1.25rem"><span style="font-weight:500">Catalogue preview</span>: all products, prices and stock levels shown are sample data. Nothing can be ordered yet.</div>
+<main style="padding:6rem 1.25rem">
 <p style="font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#66605a">404</p>
 <h1 style="font-family:Georgia,'Times New Roman',serif;font-weight:400;font-size:3rem;line-height:1;margin:1.25rem 0">Page not found</h1>
 <p style="color:#66605a">That link looks broken or incomplete.</p>
 <p style="margin-top:2.5rem"><a href="/products" style="display:inline-block;background:#171717;color:#f5f1e9;padding:.9rem 1.75rem;font-size:13px;letter-spacing:.14em;text-transform:uppercase;text-decoration:none">Browse all products</a></p>
+</main>
 </body>
 </html>`;
 

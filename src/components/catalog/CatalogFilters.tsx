@@ -25,7 +25,8 @@ const priceInputProps = {
   title: "Whole rupees, digits only (for example 499)",
   autoComplete: "off",
   className:
-    "mt-1 w-full min-w-0 border-0 border-b border-stone bg-transparent px-0 py-2 text-sm text-ink placeholder:text-muted user-invalid:border-wine",
+    // A malformed value gets a thicker wine underline: a change in shape, not colour alone (WCAG 1.4.1).
+    "mt-1 w-full min-w-0 border-0 border-b border-stone bg-transparent px-0 py-2 text-sm text-ink placeholder:text-muted user-invalid:border-b-2 user-invalid:border-wine",
 } as const;
 
 interface CatalogFiltersProps {

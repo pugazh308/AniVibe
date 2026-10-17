@@ -238,7 +238,8 @@ export function PlaceholderArt({ category, motif = 0, tone = 0, label, caption, 
         {standsOnShelf && <path d="M28 380h344" stroke={SAND} strokeWidth={1} />}
         <CategoryObject accent={accent} motif={motif} />
       </svg>
-      <span className="absolute bottom-3 left-3 text-[10px] leading-none tracking-[0.12em] whitespace-nowrap text-muted uppercase sm:bottom-4 sm:left-4">
+      {/* Wraps rather than clips on narrow two-column phone cards (e.g. 150px wide at 360px). */}
+      <span className="absolute right-3 bottom-3 left-3 text-[10px] leading-tight tracking-[0.12em] text-muted uppercase sm:right-4 sm:bottom-4 sm:left-4">
         {caption}
       </span>
     </div>
