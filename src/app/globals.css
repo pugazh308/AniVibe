@@ -1,0 +1,160 @@
+@import "tailwindcss";
+
+/*
+ * AniVibe — quiet, editorial design system.
+ *
+ * Palette (from the brand brief): warm ivory ground, ink type, muted stone,
+ * a restrained deep-wine accent and soft sand. Contrast on ivory:
+ *   ink 15.9:1 · wine 7.3:1 · muted 5.5:1 (text) · stone 4.3:1 (lines/icons only)
+ * `stone` (#77716B) is below 4.5:1 on ivory, so small secondary TEXT uses
+ * `muted` (#66605A), a slightly deeper stone that meets WCAG AA.
+ */
+@theme {
+  --color-ivory: #f5f1e9;
+  --color-paper: #ede7dd;
+  --color-sand: #d8cfc2;
+  --color-stone: #77716b;
+  --color-muted: #66605a;
+  --color-ink: #171717;
+  --color-wine: #783c4a;
+
+  --font-sans:
+    ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans",
+    sans-serif;
+
+  --radius-ui: 2px;
+  --tracking-label: 0.16em;
+}
+
+@theme inline {
+  /* Self-hosted Instrument Serif (OFL) via next/font/local — see app/layout.tsx. */
+  --font-serif: var(--font-display), "Times New Roman", Georgia, serif;
+}
+
+:root {
+  color-scheme: light;
+}
+
+@layer base {
+  html {
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+  }
+
+  body {
+    background-color: var(--color-ivory);
+    font-family: var(--font-sans);
+  }
+
+  /* Layered so utilities can override it where a component draws its own indicator. */
+  :focus-visible {
+    outline: 2px solid var(--color-wine);
+    outline-offset: 3px;
+  }
+
+  ::selection {
+    background-color: var(--color-sand);
+    color: var(--color-ink);
+  }
+}
+
+/* Small uppercase label used for eyebrows, categories and section markers. */
+@utility eyebrow {
+  font-size: 0.6875rem;
+  line-height: 1rem;
+  letter-spacing: var(--tracking-label);
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+/* Understated text link: ink with a thin underline that strengthens on hover.
+   Block padding keeps the target at least 24px tall (WCAG 2.5.8). */
+@utility link-quiet {
+  display: inline-block;
+  padding-block: 0.1875rem;
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.3em;
+  text-decoration-color: var(--color-stone);
+  transition: text-decoration-color 150ms ease, color 150ms ease;
+  &:hover {
+    color: var(--color-wine);
+    text-decoration-color: currentColor;
+  }
+}
+
+/* Primary action: ink block with ivory label. The transparent border becomes a
+   visible outline in Windows High Contrast (forced colours), where the fill is dropped. */
+@utility btn-ink {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  gap: 0.75rem;
+  border: 1px solid transparent;
+  background-color: var(--color-ink);
+  padding-inline: 1.5rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-ivory);
+  transition: background-color 150ms ease;
+  &:hover {
+    background-color: var(--color-wine);
+  }
+}
+
+/* Ivory with an ink border so it stands out against the ink announcement strip it overlaps. */
+.skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -4rem;
+  z-index: 50;
+  border: 1px solid var(--color-ink);
+  background-color: var(--color-ivory);
+  color: var(--color-ink);
+  padding: 0.625rem 1rem;
+  font-size: 0.875rem;
+}
+
+.skip-link:focus {
+  top: 1rem;
+}
+
+/*
+ * Catalogue filter panel: a native <details> disclosure (works without JS).
+ * From 1024px it becomes an always-open sidebar where the browser supports
+ * styling ::details-content; elsewhere it gracefully stays a disclosure.
+ */
+.filter-panel > summary {
+  list-style: none;
+  cursor: pointer;
+}
+.filter-panel > summary::-webkit-details-marker {
+  display: none;
+}
+.filter-panel[open] .filter-panel-icon {
+  transform: rotate(45deg);
+}
+
+@supports selector(details::details-content) {
+  @media (min-width: 64rem) {
+    .filter-panel > summary {
+      display: none;
+    }
+    .filter-panel::details-content {
+      content-visibility: visible;
+      display: block;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

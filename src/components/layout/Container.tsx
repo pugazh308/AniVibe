@@ -1,0 +1,6 @@
+import type { ReactNode } from "react";
+
+/** Page-width wrapper: one consistent measure and gutter across the site. */
+export function Container({ children, className = "" }: { children: ReactNode; className?: string }) {
+  return <div className={`mx-auto w-full max-w-[84rem] px-5 sm:px-8 lg:px-12 ${className}`}>{children}</div>;
+}
